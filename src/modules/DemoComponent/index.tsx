@@ -36,6 +36,18 @@ export default function DemoCompo() {
             maxCharacter: 2000,
             maxlength: 2000,
             isDisplayCharCount: false
+        },
+        {
+            name: 'select',
+            type: 'select',
+            label: 'Select',
+            isMulti: true,
+            options:[
+                { value: 'chocolate', label: 'Chocolate' },
+                { value: 'strawberry', label: 'Strawberry' },
+                { value: 'vanilla', label: 'Vanilla' }
+            ]
+
         }
     ]
     const onSubmit = async (data) => {
@@ -60,7 +72,9 @@ export default function DemoCompo() {
             ref={formRef}
             formItems={formState}
             defaultValues={formDefaultValues}
-            validationSchema={Yup.object().shape({})}
+            validationSchema={Yup.object().shape({
+                 ['uname']: Yup.string().required('UserName is required.').nullable(),
+            })}
             onSubmit={onSubmit}
         />
         <button onClick={() => {

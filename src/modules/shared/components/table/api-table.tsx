@@ -176,9 +176,9 @@ function ApiTable({
           setTotalRows(apiResponse.totalRows);
           setCurrentPage(PageNo);
         }
-        debugger
+
         if (apiResponse.length) {
-          debugger
+
 
           setRowData(apiResponse);
           setIsLoading(false);

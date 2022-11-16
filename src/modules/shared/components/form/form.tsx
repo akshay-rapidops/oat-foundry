@@ -10,6 +10,7 @@ import classes from './form.module.sass';
 import Input from './input/input';
 import Password from "./password/password";
 import TextArea from "./textarea/textarea";
+import SelectList from "./select/select";
 
 function ItemBlock({ label, type, actions = [], hide = true,  ...props }) {
     const typeArr = {
@@ -19,7 +20,7 @@ function ItemBlock({ label, type, actions = [], hide = true,  ...props }) {
         textarea: TextArea,
         // checkbox: Checkbox,
         // radio: Radio,
-        // select: SelectList,
+        select: SelectList,
         // datepicker: Datepicker,
         // daterangepicker: Daterangepicker,
         // customDateRangePicker: CustomDateRangePicker,
