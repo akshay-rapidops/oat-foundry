@@ -79,7 +79,53 @@ export const Flipboard = () => {
         //
         //     }
         // }
+
     }
+
+
+    const  getCursorLoc = () => {
+        // Get the location of the box that should be in focus based on cursor position
+        let text = document.getElementById('mainTextArea').value
+        let cursorIndices = [document.getElementById('mainTextArea').selectionStart, document.getElementById('mainTextArea').selectionEnd]
+
+        let indices = []
+        for (let cursorIndex of cursorIndices)
+        {
+            let preText = text.slice(0, cursorIndex)
+            let preLines = preText.split('\n')
+            let lineIndex = preLines.length - 1
+            let innerIndex = preLines[lineIndex].length
+            indices.push(lineIndex)
+            indices.push(innerIndex)
+        }
+
+        return indices
+    }
+
+
+    const onKeyChange = (event) => {
+        const getPos =  getCursorLoc();
+        if (event.key === "Enter" && getPos[0] === 5) {
+            console.log('Two Many Line')
+            event.preventDefault();
+        }
+        if(event.key === "Enter") {
+            let stopNewLine = false;
+            for(let i = 0;i < col;i++) {
+                const value = document.getElementById('flipInput-col' + (row-1) + i).value;
+                if(value) {
+                    stopNewLine =  true;
+                }
+            }
+            if(stopNewLine) {
+                console.log('stopline')
+                event.preventDefault();
+            }
+
+        }
+
+    }
+
     return (
         <>
                 <div className={'flipBoardMain'} id={'flipBoardMain'}>
@@ -114,7 +160,7 @@ export const Flipboard = () => {
 
             }
             </div>
-                    <textarea rows={6} cols={40} id={'mainTextArea'} maxLength={(41 * 6)} onChange={onChnage}></textarea>
+                    <textarea rows={6} cols={40} id={'mainTextArea'} maxLength={(41 * 6)}  onKeyPress={onKeyChange} onChange={onChnage}></textarea>
             </div>
 
 
