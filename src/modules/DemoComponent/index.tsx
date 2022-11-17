@@ -4,6 +4,7 @@ import {useEffect, useRef, useState} from "react";
 import ModalWrapper from "../shared/components/modal/modal";
 import ApiTable from "../shared/components/table/api-table";
 import axios from "axios";
+import {Flipboard} from "../shared/components/flipboard";
 
 export default function DemoCompo() {
     const formRef = useRef(null);
@@ -104,7 +105,7 @@ export default function DemoCompo() {
         }}>Close</button>
     </ModalWrapper>
 
-
+<Flipboard/>
         <ApiTable
             ref={childRef}
             gridDataService={getData}

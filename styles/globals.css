@@ -24,3 +24,46 @@ a {
     background: black;
   }
 }
+
+
+.flipInput-col {
+  background-color: rgba(100, 100, 100, .5);
+  width: 20px;
+  height: 30px;
+}
+
+.flipBoardMain {
+  border-color: red;
+  border: 1px solid;
+  width: fit-content;
+  position: relative;
+  margin: 0 auto;
+margin-bottom: 20px;
+}
+
+#mainTextArea {
+  line-height: 30.7968px;
+  cursor: text;
+  text-align: left;
+  overflow: hidden;
+  resize: none;
+  width: calc(100% + 1ex);
+  position: absolute;
+  /*z-index: 0;*/
+  top:0;
+  background:transparent;
+  color: transparent;
+  letter-spacing:  12px;
+  font-kerning: normal;
+
+}
+#mainTextArea:focus {
+  outline: 0px;
+  border: 0px ;
+}
+
+#mainTextArea::selection {
+  color: transparent;
+  background: transparent;
+}
+
