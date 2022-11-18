@@ -5,13 +5,13 @@ export const Flipboard = () => {
     const [row,setRow] =  useState(6);
     const [col,setCol] = useState(40)
     const [width,setWidth] = useState(0)
-    const [align,setAlign] = useState('left')
+    const [align,setAlign] = useState('right')
 
     useEffect(() => {
           setTimeout(() => {
               // const width =  document.getElementById('flipBoardMain').offsetWidth;
               // document.getElementById('mainTextArea').style.width = width + 'px';
-              const colWidth =  document.getElementById('flipInput-col00').offsetWidth;
+              // const colWidth =  document.getElementById('flipInput-col00').offsetWidth;
 
               // document.getElementById('mainTextArea').style.letterSpacing ='15px';
               // document.getElementById('mainTextArea').style.fontSize ='15px';
@@ -34,12 +34,15 @@ export const Flipboard = () => {
         }
         if(align === 'left') {
             for(let textl = 0 ; textl < e.target.value.length;textl++) {
-                if(e.target.value.charCodeAt(textl) && e.target.value.charCodeAt(textl) === 10 || textl === (41 * (rowIn + 1) )) {
+                // console.log('Heyyyy',textl,(40 * (rowIn + 1)))
+                if((e.target.value.charCodeAt(textl) && e.target.value.charCodeAt(textl) === 10) || (textl  === (col * (rowIn + 1)))) {
                     rowIn++;
                     colIn = 0;
                     if( document.getElementById('flipInput-col'+ rowIn + 0)) {
                         document.getElementById('flipInput-col'+ rowIn + 0).value = e.target.value.charAt(textl).toUpperCase() || ''
+                        colIn++;
                     }
+
 
                 } else {
                     if(document.getElementById('flipInput-col'+ rowIn + colIn)) {
@@ -56,21 +59,20 @@ export const Flipboard = () => {
         if(align === 'right'){
 
             const strArr =  e.target.value.split('\n');
-            console.log(strArr);
             for(let i=0 ;i < strArr.length;i++) { // row
-                  for(let j = col; j> 0;j--) { //col
-                      if(j > (col - strArr[i].length)) {
-                          let m = 0;
-                          for(let b = (col - strArr[i].length); b < 40;b++) {
-                              if( document.getElementById('flipInput-col'+ i + b)) {
-                                  document.getElementById('flipInput-col'+ i + b).value = strArr[i].charAt(m).toUpperCase()
+                for(let j = col; j> 0;j--) { //col
+                    if(j > (col - strArr[i].length)) {
+                        let m = 0;
+                        for(let b = (col - strArr[i].length); b < col;b++) {
+                            if( document.getElementById('flipInput-col'+ i + b)) {
+                                document.getElementById('flipInput-col'+ i + b).value = strArr[i].charAt(m).toUpperCase()
 
-                              }
-                              m++;
+                            }
+                            m++;
 
-                          }
-                      }
-                  }
+                        }
+                    }
+                }
             }
         }
 
@@ -107,6 +109,9 @@ export const Flipboard = () => {
         const getPos =  getCursorLoc();
         if (event.key === "Enter" && getPos[0] === 5) {
             console.log('Two Many Line')
+            event.preventDefault();
+        }
+        if(event.target.value.length === (row * col)) {
             event.preventDefault();
         }
         if(event.key === "Enter") {
