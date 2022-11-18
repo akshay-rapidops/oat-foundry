@@ -49,15 +49,16 @@ margin-bottom: 20px;
 #mainTextArea {
   line-height: 30.7968px;
   cursor: text;
-  text-align: left;
   overflow: hidden;
   resize: none;
   width: calc(100% + 1ex);
-  position: absolute;
+  /*position: absolute;*/
   /*z-index: 0;*/
   top:0;
-  background:transparent;
-  color: transparent;
+  background: white;
+  color: black;
+  /*background:transparent;*/
+  /*color: transparent;*/
   letter-spacing:  12px;
   font-kerning: normal;
 
