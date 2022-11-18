@@ -5,25 +5,11 @@ export const Flipboard = () => {
     const [row,setRow] =  useState(6);
     const [col,setCol] = useState(40)
     const [width,setWidth] = useState(0)
-    const [align,setAlign] = useState('right')
+    const [align,setAlign] = useState('left')
 
-    useEffect(() => {
-          setTimeout(() => {
-              // const width =  document.getElementById('flipBoardMain').offsetWidth;
-              // document.getElementById('mainTextArea').style.width = width + 'px';
-              // const colWidth =  document.getElementById('flipInput-col00').offsetWidth;
-
-              // document.getElementById('mainTextArea').style.letterSpacing ='15px';
-              // document.getElementById('mainTextArea').style.fontSize ='15px';
-          },10)
-    },[])
+    const renderArr = [];
     const onChnage = (e) => {
-        // console.log(e.target.value.charCodeAt(4))
-        // console.log(e.target.value.charAt(4))
-        console.log(document.getElementById("mainTextArea").selectionStart);
-        let colIn = 0;
-        let rowIn = 0;
-
+        //reset all inout
         for(let rowI = 0;rowI < row;rowI++) {
             for (let colI = 0; colI < col; colI++) {
                 if(document.getElementById('flipInput-col'+ rowI + colI)) {
@@ -32,56 +18,81 @@ export const Flipboard = () => {
                 }
             }
         }
+        //print board
         if(align === 'left') {
-            for(let textl = 0 ; textl < e.target.value.length;textl++) {
-                // console.log('Heyyyy',textl,(40 * (rowIn + 1)))
-                if((e.target.value.charCodeAt(textl) && e.target.value.charCodeAt(textl) === 10) || (textl  === (col * (rowIn + 1)))) {
-                    rowIn++;
-                    colIn = 0;
-                    if( document.getElementById('flipInput-col'+ rowIn + 0)) {
-                        document.getElementById('flipInput-col'+ rowIn + 0).value = e.target.value.charAt(textl).toUpperCase() || ''
-                        colIn++;
-                    }
+            printLeftAlignBoard(e.target.value)
+        }
+        if(align === 'right'){
+            printRightAlignBoard(e.target.value)
+
+        }
+    }
 
 
-                } else {
-                    if(document.getElementById('flipInput-col'+ rowIn + colIn)) {
-                        document.getElementById('flipInput-col'+ rowIn + colIn).value = e.target.value.charAt(textl).toUpperCase() || ''
-
-                    }
+    const printLeftAlignBoard = (str) => {
+        let colIn = 0;
+        let rowIn = 0;
+        for(let textl = 0 ; textl < str?.length;textl++) {
+            // console.log('Heyyyy',textl,(40 * (rowIn + 1)))
+            if((str.charCodeAt(textl) && str.charCodeAt(textl) === 10) || (textl  === (col * (rowIn + 1)))) {
+                rowIn++;
+                colIn = 0;
+                if( document.getElementById('flipInput-col'+ rowIn + 0)) {
+                    document.getElementById('flipInput-col'+ rowIn + 0).value = str.charAt(textl).toUpperCase() || ''
                     colIn++;
                 }
 
+
+            } else {
+                if(document.getElementById('flipInput-col'+ rowIn + colIn)) {
+                    document.getElementById('flipInput-col'+ rowIn + colIn).value = str.charAt(textl).toUpperCase() || ''
+
+                }
+                colIn++;
             }
 
+        }
+    }
+    const printRightAlignBoard = (str) => {
+        const renderArr = [];
+        let  rowIndex = 0;
+        let myvar = (col -  1);
+        for(let h = 0 ; h< str.length; h++) {
+            if(rowIndex > 0) { // after 39 character new line
+                if(renderArr[rowIndex]?.length > col) {
+                    rowIndex++;
+                    myvar =  myvar + col;
+
+                }
+            }
+            if(h > myvar || (str.charCodeAt(h) === 10)) { // cliek on enter new line code
+                rowIndex++;
+                myvar =  myvar + col;
+            }
+            if(str.charCodeAt(h) !== 10) {
+                const arrStringValue: any =  renderArr[rowIndex] || ''
+                renderArr[rowIndex] = arrStringValue + str.charAt(h);
+
+            }
 
         }
-        if(align === 'right'){
 
-            const strArr =  e.target.value.split('\n');
-            for(let i=0 ;i < strArr.length;i++) { // row
-                for(let j = col; j> 0;j--) { //col
-                    if(j > (col - strArr[i].length)) {
-                        let m = 0;
-                        for(let b = (col - strArr[i].length); b < col;b++) {
-                            if( document.getElementById('flipInput-col'+ i + b)) {
-                                document.getElementById('flipInput-col'+ i + b).value = strArr[i].charAt(m).toUpperCase()
-
-                            }
-                            m++;
+        let strArr =  renderArr;
+        for(let rR=0 ;rR < strArr.length;rR++) { // row
+            for(let cR = col; cR> 0;cR--) { //col
+                if(cR > (col - strArr[rR]?.length)) {
+                    let m = 0;
+                    for(let b = (col - strArr[rR].length); b < col;b++) {
+                        if( document.getElementById('flipInput-col'+ rR + b)) {
+                            document.getElementById('flipInput-col'+ rR + b).value = strArr[rR].charAt(m).toUpperCase()
 
                         }
+                        m++;
+
                     }
                 }
             }
         }
-
-
-
-
-
-
-
     }
 
 
@@ -134,8 +145,8 @@ export const Flipboard = () => {
     return (
         <>
 
-            <button onClick={() => setAlign('left')}>Left</button>
-            <button onClick={() => setAlign('right')}>Right</button>
+            <button className={`alignButton ${align === 'left' ? 'active' : ''}` } onClick={() => setAlign('left')}>Left</button>
+            <button  className={`alignButton ${align === 'right' ? 'active' : ''}`} onClick={() => setAlign('right')}>Right</button>
                 <div className={'flipBoardMain'} id={'flipBoardMain'}>
             <div>
             {

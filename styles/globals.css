@@ -39,7 +39,7 @@ a {
 
 .flipBoardMain {
   border-color: red;
-  border: 1px solid;
+  /*border: 1px solid;*/
   width: fit-content;
   position: relative;
   margin: 0 auto;
@@ -55,12 +55,14 @@ margin-bottom: 20px;
   position: absolute;
   z-index: 0;
   top:0;
-  background: white;
-  color: black;
+  /*background: white;*/
+  /*color: black;*/
   background:transparent;
   color: transparent;
   letter-spacing:  12px;
   font-kerning: normal;
+  outline: 0;
+  border: 0px solid transparent;
 
 }
 #mainTextArea:focus {
@@ -72,4 +74,12 @@ margin-bottom: 20px;
   color: transparent;
   background: transparent;
 }
-
+.alignButton {
+  background: white;
+  color: black;
+  border:1px solid;
+}
+.alignButton.active {
+  background: #0070f3;
+  color: white;
+}

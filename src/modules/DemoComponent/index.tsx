@@ -104,7 +104,7 @@ export default function DemoCompo() {
             }
         }}>Close</button>
     </ModalWrapper>
-
+    <br/><br/><br/><br/><br/>
 <Flipboard/>
         <ApiTable
             ref={childRef}
