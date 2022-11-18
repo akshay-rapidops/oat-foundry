@@ -52,13 +52,13 @@ margin-bottom: 20px;
   overflow: hidden;
   resize: none;
   width: calc(100% + 1ex);
-  /*position: absolute;*/
-  /*z-index: 0;*/
+  position: absolute;
+  z-index: 0;
   top:0;
   background: white;
   color: black;
-  /*background:transparent;*/
-  /*color: transparent;*/
+  background:transparent;
+  color: transparent;
   letter-spacing:  12px;
   font-kerning: normal;
 
