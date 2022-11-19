@@ -45,7 +45,15 @@ a {
   margin: 0 auto;
 margin-bottom: 20px;
 }
-
+#colorBoardMain {
+  position: absolute;
+  background: white;
+  top:0;
+  z-index: 1;
+  width: 100%;
+  background: transparent;
+  height: 100%;
+}
 #mainTextArea {
   line-height: 30.7968px;
   cursor: text;
@@ -53,7 +61,7 @@ margin-bottom: 20px;
   resize: none;
   width: calc(100% + 1ex);
   position: absolute;
-  z-index: 0;
+  z-index: 2;
   top:0;
   /*background: white;*/
   /*color: black;*/
@@ -83,3 +91,19 @@ margin-bottom: 20px;
   background: #0070f3;
   color: white;
 }
+
+.colorInputPlaceholder {
+  background-color: transparent;
+  width: 20px;
+  height: 30px;
+  padding: 0px;
+}
+.flipInput-line {
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+}
+.colorInputPlaceholder.whiteColorRect {
+  background: white;
+}
+

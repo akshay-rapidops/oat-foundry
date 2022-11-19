@@ -5,7 +5,7 @@ export const Flipboard = () => {
     const [row,setRow] =  useState(6);
     const [col,setCol] = useState(40)
     const [width,setWidth] = useState(0)
-    const [align,setAlign] = useState('left')
+    const [align,setAlign] = useState('center')
 
     const renderArr = [];
     const onChnage = (e) => {
@@ -26,8 +26,50 @@ export const Flipboard = () => {
             printRightAlignBoard(e.target.value)
 
         }
+        if(align === 'center') {
+            printCenterAlignBoard(e.target.value)
+        }
     }
 
+    const printCenterAlignBoard = (str) => {
+        const renderArr = [];
+        let  rowIndex = 0;
+        let myvar = (col -  1);
+        for(let h = 0 ; h< str.length; h++) {
+            if(rowIndex > 0) { // after 39 character new line
+                if(renderArr[rowIndex]?.length > col) {
+                    rowIndex++;
+                    myvar =  myvar + col;
+
+                }
+            }
+            if(h > myvar || (str.charCodeAt(h) === 10)) { // cliek on enter new line code
+                rowIndex++;
+                myvar =  myvar + col;
+            }
+            if(str.charCodeAt(h) !== 10) {
+                const arrStringValue: any =  renderArr[rowIndex] || ''
+                renderArr[rowIndex] = arrStringValue + str.charAt(h);
+
+            }
+
+        }
+
+        let strArr =  renderArr;
+        for(let rR=0 ;rR < strArr.length;rR++) { // row
+            console.log((col/2 - strArr[rR].length))
+            let m = 0;
+        console.log('Hey',Math.floor(strArr[rR].length/2))
+            const startPoint =  (col/2 - Math.floor(strArr[rR].length/2));
+
+            for(let cR = startPoint; cR< startPoint +  strArr[rR].length ;cR++) {
+                console.log('Row',rR, 'Col',cR)
+                document.getElementById('flipInput-col'+ rR + cR).value = strArr[rR].charAt(m).toUpperCase()
+                m++;
+            }
+
+        }
+    }
 
     const printLeftAlignBoard = (str) => {
         let colIn = 0;
@@ -145,8 +187,23 @@ export const Flipboard = () => {
     return (
         <>
 
-            <button className={`alignButton ${align === 'left' ? 'active' : ''}` } onClick={() => setAlign('left')}>Left</button>
-            <button  className={`alignButton ${align === 'right' ? 'active' : ''}`} onClick={() => setAlign('right')}>Right</button>
+            <button className={`alignButton ${align === 'left' ? 'active' : ''}` } onClick={() => {
+                document.getElementById('colorBoardMain').style.zIndex = 1;
+                document.getElementById('mainTextArea').style.zIndex = 2;
+                setAlign('left')}}>Left</button>
+            <button  className={`alignButton ${align === 'center' ? 'active' : ''}`} onClick={() => {
+                document.getElementById('colorBoardMain').style.zIndex = 1;
+                document.getElementById('mainTextArea').style.zIndex = 2;
+                setAlign('center')}}>Center</button>
+            <button  className={`alignButton ${align === 'right' ? 'active' : ''}`} onClick={() => {
+                document.getElementById('colorBoardMain').style.zIndex = 1;
+                document.getElementById('mainTextArea').style.zIndex = 2;
+                setAlign('right')}}>Right</button>
+
+            <button onClick={() => {
+                    document.getElementById('colorBoardMain').style.zIndex = 2;
+                 document.getElementById('mainTextArea').style.zIndex = 1;
+            }}>Color</button>
                 <div className={'flipBoardMain'} id={'flipBoardMain'}>
             <div>
             {
@@ -180,6 +237,38 @@ export const Flipboard = () => {
             }
             </div>
                     <textarea rows={6} cols={40} id={'mainTextArea'} style={{textAlign:`${align}`}} maxLength={(41 * 6)}  onKeyPress={onKeyChange} onChange={onChnage}></textarea>
+                    <div id={'colorBoardMain'}>
+
+                        {
+                            [...Array(row).keys()].map((rowIndex) => {
+                                return (
+                                    <>
+                                        <div className={'flipInput-line'}>
+                                            {
+                                                [...Array(col).keys()].map((colIndex) => {
+                                                    return (
+                                                        <>
+                                                            <div id={`colorInputPlaceholder-${rowIndex}-${colIndex}`} className={'colorInputPlaceholder'} onMouseDown={() => {
+
+                                                                document.getElementById('colorInputPlaceholder-'+rowIndex+ '-'+colIndex).classList.add("whiteColorRect");
+
+                                                            }}></div>
+                                                        </>
+                                                    )
+                                                })
+                                            }
+
+                                        </div>
+
+                                    </>
+                                )
+                            })
+
+
+                        }
+
+
+                    </div>
             </div>
 
 
