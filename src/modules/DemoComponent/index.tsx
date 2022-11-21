@@ -7,10 +7,10 @@ import axios from "axios";
 import {Flipboard} from "../shared/components/flipboard";
 
 export default function DemoCompo() {
-    const formRef = useRef(null);
+    const formRef  : any= useRef(null);
     const [formDefaultValues, setFormDefaultValues] = useState(null);
-    const modelRef =  useRef(null);
-    const childRef =  useRef(null);
+    const modelRef : any=  useRef(null);
+    const childRef : any =  useRef(null);
     const formState = [
         {
             name: 'uname',
@@ -51,7 +51,7 @@ export default function DemoCompo() {
 
         }
     ]
-    const onSubmit = async (data) => {
+    const onSubmit = async (data:any ) => {
         console.log(data)
     }
 

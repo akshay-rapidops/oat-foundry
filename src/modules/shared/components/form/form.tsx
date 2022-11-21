@@ -71,41 +71,6 @@ function FormItems({ fields }) {
                     />)
                 })
             }
-            {/*{fields.map(*/}
-            {/*    ({*/}
-            {/*         key,*/}
-            {/*         title,*/}
-            {/*         subtitle = null,*/}
-            {/*         items,*/}
-            {/*     }) => (*/}
-            {/*        <div className={`${classes.formbox} formbox `}>*/}
-            {/*            {*/}
-            {/*                (title ||  subtitle) ? (*/}
-            {/*                    <div className={`${classes.formboxtitle} formboxtitle`}>*/}
-            {/*                        <h3>{title}</h3>*/}
-
-            {/*                        {subtitle !== null ? (<span className={classes.subtitle}>{subtitle}</span>) : (<></>)}*/}
-            {/*                    </div>*/}
-            {/*                ) : null*/}
-            {/*            }*/}
-
-            {/*            {hideSectionArr.indexOf(key) === -1 ? (*/}
-            {/*                <div className={`${classes.formboxInner} formboxInner`}>*/}
-            {/*                    {Array.isArray(items) &&*/}
-            {/*                        items.map((itemArr,index) => (*/}
-            {/*                            <div className={`${classes.ordformlist} ordformlist`}>*/}
-            {/*                                <ItemBlock*/}
-            {/*                                    key={`formelement_${itemArr[index].name}`}*/}
-            {/*                                    blocktype="right"*/}
-            {/*                                    {...itemArr[1]}*/}
-            {/*                                />*/}
-            {/*                            </div>*/}
-            {/*                        ))}*/}
-            {/*                </div>*/}
-            {/*            ) : (<></>)}*/}
-            {/*        </div>*/}
-            {/*    ),*/}
-            {/*)}*/}
         </div>
     );
 }
