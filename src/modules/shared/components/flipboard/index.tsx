@@ -1,12 +1,18 @@
-import {useEffect, useState} from "react";
-
+import React, {useEffect, useState} from "react";
+import GridLayout from "react-grid-layout";
+import { v4 as uuidv4 } from 'uuid';
 
 export const Flipboard = () => {
     const [row,setRow] =  useState(6);
     const [col,setCol] = useState(40)
     const [width,setWidth] = useState(0)
     const [align,setAlign] = useState('center')
-
+    const [layout,setlayout] = useState(null)
+    useEffect(() => {
+        setTimeout(() =>{
+                setWidth(document.getElementById('flipBoardMain').offsetWidth)
+        },100)
+    },[])
     const renderArr = [];
     const onChnage = (e) => {
         //reset all inout
@@ -63,9 +69,11 @@ export const Flipboard = () => {
             const startPoint =  (col/2 - Math.floor(strArr[rR].length/2));
 
             for(let cR = startPoint; cR< startPoint +  strArr[rR].length ;cR++) {
-                console.log('Row',rR, 'Col',cR)
-                document.getElementById('flipInput-col'+ rR + cR).value = strArr[rR].charAt(m).toUpperCase()
-                m++;
+                if( document.getElementById('flipInput-col'+ rR + cR)) {
+                    document.getElementById('flipInput-col'+ rR + cR).value = strArr[rR].charAt(m).toUpperCase()
+                    m++;
+
+                }
             }
 
         }
@@ -184,6 +192,48 @@ export const Flipboard = () => {
 
     }
 
+    useEffect(() =>{
+        const layoutArr = []
+        for(let lR =0 ; lR<row;lR++) {
+            if(lR=== 0) {
+                for(let lC =0 ; lC<col-7;lC++) {
+                    if(lC === 0 && lR ===0) {
+                        layoutArr.push(
+                            { i: uuidv4(), x: lC, y: lR, w: 8, h: 3,transformScale: 1},
+                        )
+
+                    } else  {
+                        if(lR ==0) {
+                            layoutArr.push(
+                                { i: uuidv4(), x: lC + 7, y: lR, w: 1, h: 3 ,transformScale: 1},
+                            )
+
+                        }
+                    }
+                }
+            } else {
+                for(let lC =0 ; lC<col;lC++) {
+                    if(lC === 0 && lR ===0) {
+                        layoutArr.push(
+                            { i: uuidv4(), x: lC, y: lR, w: 1, h: 3 ,transformScale: 1 },
+                        )
+
+                    } else  {
+
+                            layoutArr.push(
+                                { i: uuidv4(), x: lC, y: lR, w: 1, h: 3 ,transformScale: 1},
+                            )
+
+
+
+                    }
+                }
+            }
+        }
+
+        setlayout(layoutArr)
+    },[])
+
     return (
         <>
 
@@ -236,6 +286,29 @@ export const Flipboard = () => {
 
             }
             </div>
+                <div className={'dragLayout'}>
+                    {layout !== null && (
+                        <GridLayout
+                            className="layout"
+                            layout={layout}
+                            cols={40}
+                            margin={[0,0]}
+                            rowHeight={10}
+                            transformScale={1}
+                            width={width}
+                        >
+
+                            {layout.map((item, i) => (
+                                <div key={item.i} data-grid={item} className={`${i===0 ? 'widget' :'widgetHide'}`}>
+                                        {i === 0 ? 'DEMO' :''}
+                                </div>
+                            ))}
+
+                        </GridLayout>
+
+                    )}
+
+                </div>
                     <textarea rows={6} cols={40} id={'mainTextArea'} style={{textAlign:`${align}`}} maxLength={(41 * 6)}  onKeyPress={onKeyChange} onChange={onChnage}></textarea>
                     <div id={'colorBoardMain'}>
 
@@ -269,7 +342,14 @@ export const Flipboard = () => {
 
 
                     </div>
-            </div>
+
+
+                </div>
+
+
+
+
+
 
 
         </>

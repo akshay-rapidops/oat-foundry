@@ -111,3 +111,21 @@ margin-bottom: 20px;
   background: white;
 }
 
+.dragLayout {
+  position: absolute;
+  top: 0px;
+  z-index: 99;
+}
+.widget {
+  background: skyblue;
+  /*border: 1px solid;*/
+
+}
+
+.widgetHide {
+  /*background: transparent;*/
+  border: 1px solid;
+  background: transparent;
+  /*background: skyblue;*/
+  color: transparent;
+}
