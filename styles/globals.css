@@ -31,9 +31,15 @@ a {
 
 
 .flipInput-col {
-  background-color: rgba(100, 100, 100, .5);
+  border: 1px solid black;
+  background-color: rgba(100, 100, 100,1);
   width: 20px;
+  color: #FFFFFF;
+  font-weight: 700;
   height: 30px;
+}
+.splitflap-input-good {
+  background-color: #000;
 }
 .flipInput-col1 {
   background-color: rgba(100, 100, 100, .5);
@@ -132,6 +138,7 @@ margin-bottom: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+  display: none;
 }
 
 .widgetHide {
@@ -143,4 +150,17 @@ margin-bottom: 20px;
 }
 .react-grid-layout  {
   height: 180px !important;
+}
+
+.textaligncenter {
+  text-align: center;
+}
+
+
+.textalignleft{
+  text-align: left;
+}
+
+.textalignright{
+  text-align: right;
 }

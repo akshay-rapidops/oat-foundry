@@ -8,7 +8,7 @@ export const Flipboard = () => {
     const [width,setWidth] = useState(0)
     const [height,setHeight] = useState(0)
     const [align,setAlign] = useState('center')
-    const [layout,setlayout] = useState(null)
+
     useEffect(() => {
         setTimeout(() =>{
                 setWidth(document.getElementById('flipBoardMain').offsetWidth)
@@ -16,29 +16,32 @@ export const Flipboard = () => {
         },100)
     },[])
     const renderArr = [];
-    const onChnage = (e) => {
+    const setBoardValue = (str) => {
         //reset all inout
         for(let rowI = 0;rowI < row;rowI++) {
             for (let colI = 0; colI < col; colI++) {
-                if(document.getElementById('flipInput-col'+ rowI + colI)) {
-                    document.getElementById('flipInput-col'+ rowI + colI).value = ''
+                if(isElementExist(`${'flipInput-col'+ rowI + colI}`)) {
+                    setTextInputValue(rowI,colI)
+                    toggleClassForInput(rowI,colI)
 
                 }
             }
         }
         //print board
         if(align === 'left') {
-            printLeftAlignBoard(e.target.value)
+            printLeftAlignBoard(str)
         }
         if(align === 'right'){
-            printRightAlignBoard(e.target.value)
+            printRightAlignBoard(str)
 
         }
         if(align === 'center') {
-            printCenterAlignBoard(e.target.value)
+            printCenterAlignBoard(str)
         }
     }
-
+    const onChnage = (e) => {
+            setBoardValue(e.target.value)
+    }
     const printCenterAlignBoard = (str) => {
         const renderArr = [];
         let  rowIndex = 0;
@@ -65,14 +68,13 @@ export const Flipboard = () => {
 
         let strArr =  renderArr;
         for(let rR=0 ;rR < strArr.length;rR++) { // row
-            console.log((col/2 - strArr[rR].length))
             let m = 0;
-        console.log('Hey',Math.floor(strArr[rR].length/2))
-            const startPoint =  (col/2 - Math.floor(strArr[rR].length/2));
+            const startPoint =  (col/2 - Math.floor(strArr[rR]?.length/2));
 
-            for(let cR = startPoint; cR< startPoint +  strArr[rR].length ;cR++) {
-                if( document.getElementById('flipInput-col'+ rR + cR)) {
-                    document.getElementById('flipInput-col'+ rR + cR).value = strArr[rR].charAt(m).toUpperCase()
+            for(let cR = startPoint; cR< startPoint +  strArr[rR]?.length ;cR++) {
+                if(isElementExist(`${'flipInput-col'+ rR + cR}`)) {
+                    setTextInputValue(rR,cR, strArr[rR].charAt(m).toUpperCase())
+                    toggleClassForInput(rR,cR)
                     m++;
 
                 }
@@ -89,15 +91,17 @@ export const Flipboard = () => {
             if((str.charCodeAt(textl) && str.charCodeAt(textl) === 10) || (textl  === (col * (rowIn + 1)))) {
                 rowIn++;
                 colIn = 0;
-                if( document.getElementById('flipInput-col'+ rowIn + 0)) {
-                    document.getElementById('flipInput-col'+ rowIn + 0).value = str.charAt(textl).toUpperCase() || ''
+                if(isElementExist(`${'flipInput-col'+ rowIn + 0}`)) {
+                    setTextInputValue(rowIn,0,  str.charAt(textl).toUpperCase())
+                    toggleClassForInput(rowIn,0)
                     colIn++;
                 }
 
 
             } else {
-                if(document.getElementById('flipInput-col'+ rowIn + colIn)) {
-                    document.getElementById('flipInput-col'+ rowIn + colIn).value = str.charAt(textl).toUpperCase() || ''
+                if(isElementExist(`${'flipInput-col'+ rowIn + colIn}`)) {
+                    setTextInputValue(rowIn,colIn,  str.charAt(textl).toUpperCase())
+                    toggleClassForInput(rowIn,colIn)
 
                 }
                 colIn++;
@@ -135,8 +139,9 @@ export const Flipboard = () => {
                 if(cR > (col - strArr[rR]?.length)) {
                     let m = 0;
                     for(let b = (col - strArr[rR].length); b < col;b++) {
-                        if( document.getElementById('flipInput-col'+ rR + b)) {
-                            document.getElementById('flipInput-col'+ rR + b).value = strArr[rR].charAt(m).toUpperCase()
+                        if(isElementExist(`${'flipInput-col'+ rR + b}`)) {
+                            setTextInputValue(rR,b,strArr[rR].charAt(m).toUpperCase())
+                            toggleClassForInput(rR,b)
 
                         }
                         m++;
@@ -180,8 +185,7 @@ export const Flipboard = () => {
         if(event.key === "Enter") {
             let stopNewLine = false;
             for(let i = 0;i < col;i++) {
-                const value = document.getElementById('flipInput-col' + (row-1) + i).value;
-                if(value) {
+                if(getTextInputValue((row-1),i)) {
                     stopNewLine =  true;
                 }
             }
@@ -194,47 +198,36 @@ export const Flipboard = () => {
 
     }
 
+
+
     useEffect(() =>{
-        const layoutArr = []
-        for(let lR =0 ; lR<row;lR++) {
-            if(lR=== 0) {
-                for(let lC =0 ; lC<col-7;lC++) {
-                    if(lC === 0 && lR ===0) {
-                        layoutArr.push(
-                            { i: uuidv4(), x: lC, y: lR, w: 8, h: 3,isBounded: false},
-                        )
-
-                    } else  {
-                        if(lR ==0) {
-                            layoutArr.push(
-                                { i: uuidv4(), x: lC + 7, y: lR, w: 1, h: 3 ,isBounded: false,},
-                            )
-
-                        }
-                    }
-                }
-            } else {
-                for(let lC =0 ; lC<col;lC++) {
-                    if(lC === 0 && lR ===0) {
-                        layoutArr.push(
-                            { i: uuidv4(), x: lC, y: lR, w: 1, h: 3 ,isBounded: false},
-                        )
-
-                    } else  {
-
-                            layoutArr.push(
-                                { i: uuidv4(), x: lC, y: lR, w: 1, h: 3 ,isBounded: false},
-                            )
+            setTimeout(() =>{
+                const textValue =  document.getElementById('mainTextArea')?.value || '';
+                setBoardValue(textValue)
+            },10)
+    },[align])
 
 
-
-                    }
-                }
-            }
+    const setTextInputValue = (rowI,colI,val = '') =>{
+        document.getElementById('flipInput-col'+ rowI + colI).value = val
+    }
+    const getTextInputValue = (rowI,colI,val = '') =>{
+        const value  = document.getElementById('flipInput-col'+ rowI + colI).value || null;
+        return value;
+    }
+    const isElementExist = (id) => {
+        if (document.getElementById(id)) {
+            return true
         }
-
-        setlayout(layoutArr)
-    },[])
+        return  false
+    }
+    const toggleClassForInput  = (rowI,colI) => {
+        if(document.getElementById('flipInput-col' + rowI + colI).value) {
+            document.getElementById('flipInput-col' + rowI + colI).classList.add("splitflap-input-good");
+        } else  {
+            document.getElementById('flipInput-col' + rowI + colI).classList.remove("splitflap-input-good");
+        }
+    }
 
     return (
         <>
@@ -269,7 +262,13 @@ export const Flipboard = () => {
                                             <>
 
                                                 <input
-                                                    className={'flipInput-col'}
+                                                    className={`flipInput-col
+                                                       ${align === 'center' ? 'textaligncenter' :''}
+                                                        ${align === 'left' ? 'textalignleft' :''}
+                                                          ${align === 'right' ? 'textalignright' :''}
+                                                    
+                                                    
+                                                    `}
                                                     id={`flipInput-col${rowIndex}${colIndex}`}
                                                     contentEditable={true}
                                                     readOnly={true}
