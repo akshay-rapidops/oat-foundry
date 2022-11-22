@@ -1,16 +1,18 @@
 import React, {useEffect, useState} from "react";
 import GridLayout from "react-grid-layout";
 import { v4 as uuidv4 } from 'uuid';
-
+import Draggable from 'react-draggable';
 export const Flipboard = () => {
     const [row,setRow] =  useState(6);
     const [col,setCol] = useState(40)
     const [width,setWidth] = useState(0)
+    const [height,setHeight] = useState(0)
     const [align,setAlign] = useState('center')
     const [layout,setlayout] = useState(null)
     useEffect(() => {
         setTimeout(() =>{
                 setWidth(document.getElementById('flipBoardMain').offsetWidth)
+            setHeight(document.getElementById('flipBoardMain').offsetHeight)
         },100)
     },[])
     const renderArr = [];
@@ -199,13 +201,13 @@ export const Flipboard = () => {
                 for(let lC =0 ; lC<col-7;lC++) {
                     if(lC === 0 && lR ===0) {
                         layoutArr.push(
-                            { i: uuidv4(), x: lC, y: lR, w: 8, h: 3,transformScale: 1},
+                            { i: uuidv4(), x: lC, y: lR, w: 8, h: 3,isBounded: false},
                         )
 
                     } else  {
                         if(lR ==0) {
                             layoutArr.push(
-                                { i: uuidv4(), x: lC + 7, y: lR, w: 1, h: 3 ,transformScale: 1},
+                                { i: uuidv4(), x: lC + 7, y: lR, w: 1, h: 3 ,isBounded: false,},
                             )
 
                         }
@@ -215,13 +217,13 @@ export const Flipboard = () => {
                 for(let lC =0 ; lC<col;lC++) {
                     if(lC === 0 && lR ===0) {
                         layoutArr.push(
-                            { i: uuidv4(), x: lC, y: lR, w: 1, h: 3 ,transformScale: 1 },
+                            { i: uuidv4(), x: lC, y: lR, w: 1, h: 3 ,isBounded: false},
                         )
 
                     } else  {
 
                             layoutArr.push(
-                                { i: uuidv4(), x: lC, y: lR, w: 1, h: 3 ,transformScale: 1},
+                                { i: uuidv4(), x: lC, y: lR, w: 1, h: 3 ,isBounded: false},
                             )
 
 
@@ -285,30 +287,46 @@ export const Flipboard = () => {
 
 
             }
-            </div>
-                <div className={'dragLayout'}>
-                    {layout !== null && (
-                        <GridLayout
-                            className="layout"
-                            layout={layout}
-                            cols={40}
-                            margin={[0,0]}
-                            rowHeight={10}
-                            transformScale={1}
-                            width={width}
-                        >
+                <div className={'dragLayout'} id={'dragLayout'}>
+                    <Draggable
+                        defaultPosition={{x: 0, y: 0}}
+                        position={null}
+                        grid={[20, 30]}
+                        bounds={{left :0,right:width- (20 * 4),bottom:height-(30 * 3),top:0}}
+                        scale={1}
+                        onStart={() => {}}
+                        onDrag={() => {}}
+                        onStop={() => {}}>
 
-                            {layout.map((item, i) => (
-                                <div key={item.i} data-grid={item} className={`${i===0 ? 'widget' :'widgetHide'}`}>
-                                        {i === 0 ? 'DEMO' :''}
-                                </div>
-                            ))}
+                            <div className={'widget'}  id={'widget'}>Widget</div>
 
-                        </GridLayout>
-
-                    )}
-
+                    </Draggable>
                 </div>
+            </div>
+
+                {/*<div className={'dragLayout'}>*/}
+                {/*    {layout !== null && (*/}
+                {/*        <GridLayout*/}
+                {/*            className="layout"*/}
+                {/*            layout={layout}*/}
+                {/*            cols={40}*/}
+                {/*            margin={[0,0]}*/}
+                {/*            rowHeight={10}*/}
+                {/*            width={width}*/}
+
+                {/*        >*/}
+
+                {/*            {layout.map((item, i) => (*/}
+                {/*                <div key={item.i} data-grid={item} className={`${i===0 ? 'widget' :'widgetHide'}`}>*/}
+                {/*                        {i === 0 ? 'DEMO' :''}*/}
+                {/*                </div>*/}
+                {/*            ))}*/}
+
+                {/*        </GridLayout>*/}
+
+                {/*    )}*/}
+
+                {/*</div>*/}
                     <textarea rows={6} cols={40} id={'mainTextArea'} style={{textAlign:`${align}`}} maxLength={(41 * 6)}  onKeyPress={onKeyChange} onChange={onChnage}></textarea>
                     <div id={'colorBoardMain'}>
 
