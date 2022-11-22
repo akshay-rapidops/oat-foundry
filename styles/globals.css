@@ -113,19 +113,34 @@ margin-bottom: 20px;
 
 .dragLayout {
   position: absolute;
-  top: 0px;
-  z-index: 99;
-}
-.widget {
-  background: skyblue;
-  /*border: 1px solid;*/
 
+  top:0;
+  z-index: 99999;
+}
+.react-grid-item {
+
+  transform: none;
+}
+
+
+.widget {
+  background: rgba(0,0,0,0.8);
+  /*border: 1px solid;*/
+  width: 80px;
+  height: 90px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .widgetHide {
   /*background: transparent;*/
   border: 1px solid;
-  background: transparent;
-  /*background: skyblue;*/
+  /*background: transparent;*/
+  background: skyblue;
   color: transparent;
+}
+.react-grid-layout  {
+  height: 180px !important;
 }
